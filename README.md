@@ -26,22 +26,36 @@ The goals of this project are to provide a platform that:
 - [How to use](#how-to-use)
 
 # Demo
-<details>
-<summary>Client to Kafka Stream Demo</summary>
-![Client to Kafka Stream](./readme_images/client-kafka-stream.gif)
+<details ontoggle="toggleGif(event)">
+  <summary>Client to Kafka Stream</summary>
+  <div class="gif-container">
+    <img id="client-kafka-stream" src="./readme_images/client-kafka-stream.gif">
+  </div>
 </details>
-<script>
-  const gif = document.getElementById("my-gif");
-  const observer = new IntersectionObserver(entries => {
-    if (entries[0].isIntersecting) {
-      gif.src = gif.src.replace(/\?.*/, "") + "?autoplay=1";
-      observer.unobserve(gif);
-    }
-  }, { threshold: [1] });
-  observer.observe(gif);
-</script>
 
-![Streamlit Query](./readme_images/streamlit-query.gif)
+<details ontoggle="toggleGif(event)">
+  <summary>Streamlit Query</summary>
+  <div class="gif-container">
+    <img id="streamlit-query" src="./readme_images/streamlit-query.gif">
+  </div>
+</details>
+
+<script>
+  function startGif(id) {
+    const gif = document.getElementById(id);
+    gif.src = gif.src.replace(/\?.*/, "") + "?autoplay=1";
+  }
+
+  function toggleGif(event) {
+    const details = event.target;
+    const gif = details.querySelector("img");
+    if (details.open) {
+      startGif(gif.id);
+    } else {
+      gif.src = gif.src.replace(/\?.*/, "");
+    }
+  }
+</script>
 
 # The Data Set
 Source: [Kaggle](https://www.kaggle.com/datasets/carrie1/ecommerce-data)
