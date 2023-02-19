@@ -26,9 +26,19 @@ The goals of this project are to provide a platform that:
 - [How to use](#how-to-use)
 
 # Demo
-![Client to Kafka Stream](./readme_images/client-kafka-stream.gif)
+<details>
+  <summary>Client to Kafka Stream</summary>
+  <div class="gif-container">
+    <img id="client-kafka-stream" src="./readme_images/client-kafka-stream.gif">
+  </div>
+</details>
 
-![Streamlit Query](./readme_images/streamlit-query.gif)
+<details>
+  <summary>Streamlit Query</summary>
+  <div class="gif-container">
+    <img id="streamlit-query" src="./readme_images/streamlit-query.gif">
+  </div>
+</details>
 
 # The Data Set
 Source: [Kaggle](https://www.kaggle.com/datasets/carrie1/ecommerce-data)
