@@ -26,7 +26,10 @@ The goals of this project are to provide a platform that:
 - [How to use](#how-to-use)
 
 # Demo
+<details>
+<summary>Client to Kafka Stream Demo</summary>
 ![Client to Kafka Stream](./readme_images/client-kafka-stream.gif)
+</details>
 <script>
   const gif = document.getElementById("my-gif");
   const observer = new IntersectionObserver(entries => {
