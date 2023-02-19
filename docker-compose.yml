@@ -1,0 +1,92 @@
+version: "3"
+services:
+ 
+  zookeeper:
+    image: 'bitnami/zookeeper:latest'
+    ports:
+      - '2181:2181'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    networks:
+      - invoice-analytics-platform
+
+  kafka:
+    image: 'bitnami/kafka:latest'
+    restart: on-failure
+    ports:
+      - '9093:9093'
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT
+      - KAFKA_CFG_LISTENERS=CLIENT://:9092,EXTERNAL://:9093
+      - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://kafka:9092,EXTERNAL://localhost:9093
+      - KAFKA_INTER_BROKER_LISTENER_NAME=CLIENT
+    depends_on:
+      - zookeeper
+    networks:
+      - invoice-analytics-platform
+
+  spark:
+    image: 'jupyter/pyspark-notebook:spark-2'
+    ports:
+      - '8888:8888'
+      - "4040-4080:4040-4080"
+    volumes:
+      - ./spark/:/home/jovyan/work
+    networks:
+      - invoice-analytics-platform
+
+  fastapi-ingest:
+    image: 'fastapi-ingest'
+    ports:
+       - '80:80'
+    depends_on:
+      - kafka
+    restart: on-failure
+    networks:
+      - invoice-analytics-platform
+
+  mongo:
+    container_name: mongo-dev
+    image: mongo
+    volumes:
+      - ~/dockerdata/mongodb:/data/db    
+    restart: on-failure
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: auth
+    networks:
+      - invoice-analytics-platform
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo-dev
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: not-yosef
+    networks:
+      - invoice-analytics-platform
+    depends_on:
+      - mongo
+
+  streamlit-app:
+    image: 'streamlit-app'
+    ports:
+      - "8501:8501"
+    networks:
+      - invoice-analytics-platform
+
+
+networks:
+  invoice-analytics-platform:
+    driver: bridge

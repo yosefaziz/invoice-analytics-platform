@@ -1,0 +1,4 @@
+fastapi==0.92.0
+kafka_python==2.0.2
+python-dotenv==0.21.1
+uvicorn[standard]==0.20.0
