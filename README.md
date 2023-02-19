@@ -27,6 +27,16 @@ The goals of this project are to provide a platform that:
 
 # Demo
 ![Client to Kafka Stream](./readme_images/client-kafka-stream.gif)
+<script>
+  const gif = document.getElementById("my-gif");
+  const observer = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      gif.src = gif.src.replace(/\?.*/, "") + "?autoplay=1";
+      observer.unobserve(gif);
+    }
+  }, { threshold: [1] });
+  observer.observe(gif);
+</script>
 
 ![Streamlit Query](./readme_images/streamlit-query.gif)
 
