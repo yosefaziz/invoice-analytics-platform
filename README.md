@@ -26,36 +26,19 @@ The goals of this project are to provide a platform that:
 - [How to use](#how-to-use)
 
 # Demo
-<details ontoggle="toggleGif(event)">
+<details>
   <summary>Client to Kafka Stream</summary>
   <div class="gif-container">
     <img id="client-kafka-stream" src="./readme_images/client-kafka-stream.gif">
   </div>
 </details>
 
-<details ontoggle="toggleGif(event)">
+<details>
   <summary>Streamlit Query</summary>
   <div class="gif-container">
     <img id="streamlit-query" src="./readme_images/streamlit-query.gif">
   </div>
 </details>
-
-<script>
-  function startGif(id) {
-    const gif = document.getElementById(id);
-    gif.src = gif.src.replace(/\?.*/, "") + "?autoplay=1";
-  }
-
-  function toggleGif(event) {
-    const details = event.target;
-    const gif = details.querySelector("img");
-    if (details.open) {
-      startGif(gif.id);
-    } else {
-      gif.src = gif.src.replace(/\?.*/, "");
-    }
-  }
-</script>
 
 # The Data Set
 Source: [Kaggle](https://www.kaggle.com/datasets/carrie1/ecommerce-data)
